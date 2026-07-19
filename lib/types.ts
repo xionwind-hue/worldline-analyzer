@@ -39,11 +39,16 @@ export type DiagnosisPhase = "top" | "questions" | "transfer" | "result";
 export type ResultContent = {
   id: string;
   worldlineId: string;
-  worldlineName: string;
-  baseTypeId: string;
+  worldlineName: "サッカー選手の世界線";
+  baseTypeId:
+    | "dominant-creator"
+    | "procrastination-dictator"
+    | "energy-saver"
+    | "burnout-follower";
+  variant: "A" | "B" | "C";
   registeredName: string;
   rank: string;
-  valuationLabel: string;
+  positions: string[];
   valuationAmount: string;
   assessments: Array<{
     realTrait: string;
@@ -55,10 +60,12 @@ export type ResultContent = {
     amount: string;
   };
   story: string;
-  episodes: [string, string] | [string, string, string];
+  episodes: [string, string, string];
   handlingGuide: string[];
-  stats?: Array<{ label: string; value: number | string }>;
-  skills?: string[];
+  stats: Array<{ label: string; value: number }>;
+  skills: Array<{ name: string; description: string }>;
   finalSystemVerdict: string;
+  scoutReportCopy: string;
+  worldlineStoryCopy: string;
   visualKey: string;
 };
