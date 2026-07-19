@@ -45,8 +45,8 @@ export function TopPage() {
               <br />
               世界が変われば、
               <br className="sm:hidden" />
-              それはまったく違う才能になるかもしれま
-              <span className="whitespace-nowrap">せん。</span>
+              <span>それはまったく違う才能に</span>
+              <span className="whitespace-nowrap">なるかもしれません。</span>
             </p>
           </div>
 
