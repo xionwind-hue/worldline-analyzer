@@ -1,26 +1,234 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f8faff;
+  --foreground: #171a3b;
+  --dark-navy: #171a3b;
+  --primary-blue: #346bff;
+  --primary-purple: #7c5cff;
+  --accent-blue: #4d8cff;
+  --lavender: #b8a8ff;
+  --lavender-pale: #edebff;
+  --gradient-primary: linear-gradient(135deg, #346bff 0%, #4d8cff 45%, #7c5cff 100%);
+  --gradient-button: linear-gradient(100deg, #4d8cff 0%, #7c5cff 100%);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-dark-navy: var(--dark-navy);
+  --color-primary-blue: var(--primary-blue);
+  --color-primary-purple: var(--primary-purple);
+  --color-accent-blue: var(--accent-blue);
+  --color-lavender: var(--lavender);
+  --color-lavender-pale: var(--lavender-pale);
+  --font-sans: var(--font-noto-sans-jp), var(--font-space-grotesk), sans-serif;
+  --font-display: var(--font-space-grotesk), var(--font-noto-sans-jp), sans-serif;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+}
+
+/* ============================================================
+   SHARED UI
+   ============================================================ */
+
+@keyframes scan-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+@keyframes fade-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes result-flicker {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  92% {
+    opacity: 1;
+  }
+  93% {
+    opacity: 0.7;
+  }
+  94% {
+    opacity: 1;
+  }
+}
+
+@keyframes scroll-drop {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes progress-shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+.animate-scan-blink {
+  animation: scan-blink 1.6s ease-in-out infinite;
+}
+
+.animate-fade-slide-in {
+  animation: fade-slide-in 0.45s ease-out both;
+}
+
+.animate-result-flicker {
+  animation: result-flicker 3s ease-in-out infinite;
+}
+
+.scroll-line {
+  position: relative;
+  overflow: hidden;
+}
+
+.scroll-line::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent, #ffffff, transparent);
+  animation: scroll-drop 2.2s ease-in-out infinite;
+}
+
+.gradient-text {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* 1px gradient outline for cards */
+.gradient-border {
+  position: relative;
+}
+
+.gradient-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--gradient-primary);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Thicker, glowing gradient outline for the selected option card */
+.gradient-border-strong::before {
+  padding: 2px;
+}
+
+/* Primary gradient pill button (診断を始める →) */
+.btn-primary {
+  background: var(--gradient-button);
+  box-shadow:
+    0 6px 24px rgba(124, 92, 255, 0.35),
+    0 0 0 1px rgba(255, 255, 255, 0.18) inset;
+  transition:
+    box-shadow 0.3s ease,
+    transform 0.3s ease,
+    filter 0.3s ease;
+}
+
+.btn-primary:hover {
+  filter: brightness(1.1) saturate(1.1);
+  box-shadow:
+    0 10px 36px rgba(124, 92, 255, 0.5),
+    0 0 56px rgba(77, 140, 255, 0.35),
+    0 0 0 1px rgba(255, 255, 255, 0.28) inset;
+  transform: translateY(-2px);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* Glassy secondary button (仕組みを見る) — dark surface variant */
+.btn-glass-dark {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(10px);
+  transition:
+    background 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
+}
+
+.btn-glass-dark:hover {
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 6px 24px rgba(124, 92, 255, 0.35);
+  transform: translateY(-2px);
+}
+
+/* Frosted glass telemetry card — light surface */
+.glass-card {
+  background: rgba(255, 255, 255, 0.32);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 32px rgba(23, 26, 59, 0.08);
+}
+
+/* Frosted glass telemetry card — dark navy surface */
+.glass-card-dark {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+
+.grid-overlay {
+  background-image:
+    linear-gradient(rgba(52, 107, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(52, 107, 255, 0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.grid-overlay-dark {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.progress-gradient {
+  background: linear-gradient(
+    90deg,
+    #346bff,
+    #4d8cff,
+    #7c5cff,
+    #b8a8ff,
+    #346bff
+  );
+  background-size: 200% 100%;
+  animation: progress-shimmer 3s linear infinite;
 }
