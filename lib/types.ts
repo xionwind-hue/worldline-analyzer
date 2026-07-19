@@ -35,3 +35,30 @@ export type DiagnosisResult = {
 };
 
 export type DiagnosisPhase = "top" | "questions" | "transfer" | "result";
+
+export type ResultContent = {
+  id: string;
+  worldlineId: string;
+  worldlineName: string;
+  baseTypeId: string;
+  registeredName: string;
+  rank: string;
+  valuationLabel: string;
+  valuationAmount: string;
+  assessments: Array<{
+    realTrait: string;
+    translatedAbility: string;
+    amount: string;
+  }>;
+  deduction: {
+    reason: string;
+    amount: string;
+  };
+  story: string;
+  episodes: [string, string] | [string, string, string];
+  handlingGuide: string[];
+  stats?: Array<{ label: string; value: number | string }>;
+  skills?: string[];
+  finalSystemVerdict: string;
+  visualKey: string;
+};
