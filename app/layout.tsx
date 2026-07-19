@@ -15,9 +15,9 @@ const notoSansJP = Noto_Sans_JP({
 });
 
 export const metadata: Metadata = {
-  title: "WORLDLINE ANALYZER",
+  title: "Another Status",
   description:
-    "AIパーソナリティ・メタモルフォーゼ・システム — あなたの世界線を解析します",
+    "人は、一つの世界だけでは語れない。まだ出会っていない自分と出会うための、世界線体験。",
 };
 
 export default function RootLayout({

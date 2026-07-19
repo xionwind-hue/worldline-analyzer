@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { Question } from "@/lib/types";
 import { OptionCard } from "./OptionCard";
 
@@ -19,11 +19,6 @@ export function QuestionScreen({
 }: QuestionScreenProps) {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
-
-  useEffect(() => {
-    setSelectedIndex(null);
-    setIsTransitioning(false);
-  }, [question.id]);
 
   const handleSelect = (index: number) => {
     if (isTransitioning) return;
