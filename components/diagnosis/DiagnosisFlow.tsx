@@ -6,6 +6,7 @@ import { calculateDiagnosisResult } from "@/lib/scoring";
 import type { DiagnosisPhase, ScoreDelta } from "@/lib/types";
 import { QuestionScreen } from "./QuestionScreen";
 import { ResultScreen } from "./ResultScreen";
+import { TransferScreen } from "./TransferScreen";
 
 export function DiagnosisFlow() {
   const [phase, setPhase] = useState<DiagnosisPhase>("questions");
@@ -29,7 +30,7 @@ export function DiagnosisFlow() {
       return;
     }
 
-    setPhase("result");
+    setPhase("transfer");
   };
 
   return (
@@ -48,6 +49,8 @@ export function DiagnosisFlow() {
             onAnswer={handleAnswer}
           />
         )}
+
+        {phase === "transfer" && <TransferScreen onComplete={() => setPhase("result")} />}
 
         {phase === "result" && result && <ResultScreen result={result} />}
       </div>

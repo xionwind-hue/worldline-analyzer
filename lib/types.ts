@@ -34,4 +34,4 @@ export type DiagnosisResult = {
   personalityName: string;
 };
 
-export type DiagnosisPhase = "top" | "questions" | "result";
+export type DiagnosisPhase = "top" | "questions" | "transfer" | "result";
