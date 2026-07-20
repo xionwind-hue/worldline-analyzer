@@ -538,3 +538,49 @@ export const RESULT_CONTENTS: ResultContent[] = BASE_TYPE_ORDER.flatMap((baseTyp
     buildResultContent(BASE_TYPE_CONTENTS[baseTypeId], variant),
   ),
 );
+
+const VARIANT_IDS_BY_INDEX: VariantId[] = ["A", "B", "C"];
+
+/**
+ * Deterministically resolves one of the 12 approved RESULT_CONTENTS entries
+ * from a base type and the current basic 4-question / 4-choice answer set,
+ * per MATRIX §1's variant selection rule. Pure function, no randomness.
+ */
+export function resolveResultContent(
+  baseTypeId: ResultContent["baseTypeId"],
+  answerIndexes: number[],
+): ResultContent {
+  if (answerIndexes.length !== 4) {
+    throw new Error(
+      `resolveResultContent: expected exactly 4 answer indexes, received ${answerIndexes.length}.`,
+    );
+  }
+
+  answerIndexes.forEach((answerIndex, position) => {
+    if (!Number.isInteger(answerIndex) || answerIndex < 0 || answerIndex > 3) {
+      throw new Error(
+        `resolveResultContent: answerIndexes[${position}] must be an integer between 0 and 3, received ${answerIndex}.`,
+      );
+    }
+  });
+
+  const answerSignature = answerIndexes.reduce(
+    (signature, answerIndex) => signature * 4 + answerIndex,
+    0,
+  );
+
+  const variantIndex = answerSignature % 3;
+  const variant = VARIANT_IDS_BY_INDEX[variantIndex];
+
+  const resultContent = RESULT_CONTENTS.find(
+    (content) => content.baseTypeId === baseTypeId && content.variant === variant,
+  );
+
+  if (!resultContent) {
+    throw new Error(
+      `resolveResultContent: no RESULT_CONTENTS entry found for baseTypeId "${baseTypeId}" and variant "${variant}".`,
+    );
+  }
+
+  return resultContent;
+}
