@@ -32,6 +32,7 @@ export type DiagnosisResult = {
   paceLabel: "Pace+" | "Pace-";
   personalityType: PersonalityType;
   personalityName: string;
+  content: ResultContent;
 };
 
 export type DiagnosisPhase = "top" | "questions" | "transfer" | "result";

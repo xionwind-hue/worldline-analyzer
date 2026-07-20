@@ -12,18 +12,24 @@ export function DiagnosisFlow() {
   const [phase, setPhase] = useState<DiagnosisPhase>("questions");
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<ScoreDelta[]>([]);
+  const [answerIndexes, setAnswerIndexes] = useState<number[]>([]);
 
   const result = useMemo(
-    () => (answers.length === QUESTIONS.length ? calculateDiagnosisResult(answers) : null),
-    [answers],
+    () =>
+      answers.length === QUESTIONS.length && answerIndexes.length === QUESTIONS.length
+        ? calculateDiagnosisResult(answers, answerIndexes)
+        : null,
+    [answers, answerIndexes],
   );
 
   const handleAnswer = (optionIndex: number) => {
     const question = QUESTIONS[currentQuestionIndex];
     const selectedOption = question.options[optionIndex];
     const nextAnswers = [...answers, selectedOption.scores];
+    const nextAnswerIndexes = [...answerIndexes, optionIndex];
 
     setAnswers(nextAnswers);
+    setAnswerIndexes(nextAnswerIndexes);
 
     if (currentQuestionIndex < QUESTIONS.length - 1) {
       setCurrentQuestionIndex((prev) => prev + 1);

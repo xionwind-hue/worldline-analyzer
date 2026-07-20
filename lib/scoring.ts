@@ -1,3 +1,4 @@
+import { resolveResultContent } from "@/lib/result-content";
 import type { DiagnosisResult, PersonalityType, ScoreDelta } from "./types";
 
 const PERSONALITY_NAMES: Record<PersonalityType, string> = {
@@ -27,9 +28,13 @@ export function resolvePersonalityType(ego: number, pace: number): PersonalityTy
   return "burnout-follower";
 }
 
-export function calculateDiagnosisResult(answers: ScoreDelta[]): DiagnosisResult {
+export function calculateDiagnosisResult(
+  answers: ScoreDelta[],
+  answerIndexes: number[],
+): DiagnosisResult {
   const { ego, pace } = accumulateScores(answers);
   const personalityType = resolvePersonalityType(ego, pace);
+  const content = resolveResultContent(personalityType, answerIndexes);
 
   return {
     ego,
@@ -38,5 +43,6 @@ export function calculateDiagnosisResult(answers: ScoreDelta[]): DiagnosisResult
     paceLabel: pace >= 0 ? "Pace+" : "Pace-",
     personalityType,
     personalityName: PERSONALITY_NAMES[personalityType],
+    content,
   };
 }
