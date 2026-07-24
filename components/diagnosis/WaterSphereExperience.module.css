@@ -1,0 +1,532 @@
+.page {
+  min-height: 100vh;
+  background: #dfeaff;
+  color: #17355f;
+}
+
+.scrollScene {
+  position: relative;
+  height: 500vh;
+}
+
+.viewport {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  min-height: 680px;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 50% 35%, #ffffff 0%, #edf5ff 34%, #c9dcff 100%);
+}
+
+.openingWorld {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  transform-origin: 50% 30%;
+  will-change: transform, opacity;
+}
+
+.openingImage {
+  object-fit: cover;
+  object-position: center;
+}
+
+.sphereShell {
+  position: absolute;
+  z-index: 3;
+  top: 50%;
+  left: 50%;
+  width: clamp(210px, 18vw, 330px);
+  aspect-ratio: 1;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.38);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 29%, rgba(255, 255, 255, 0.9) 0 2%, transparent 17%),
+    radial-gradient(circle at 62% 64%, rgba(186, 237, 255, 0.42), transparent 34%),
+    radial-gradient(circle at 50% 50%, rgba(232, 242, 255, 0.08), rgba(200, 226, 255, 0.22) 68%, rgba(255, 255, 255, 0.62) 100%);
+  box-shadow:
+    0 0 52px rgba(255, 255, 255, 0.5),
+    0 0 110px rgba(190, 225, 255, 0.34),
+    inset 0 0 62px rgba(255, 255, 255, 0.38);
+  backdrop-filter: blur(2px) saturate(1.16);
+  transform-origin: center;
+  will-change: transform, opacity;
+}
+
+.sphereCore {
+  position: absolute;
+  inset: 9%;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 28% 38%, rgba(162, 243, 255, 0.8) 0 1.5%, transparent 4%),
+    radial-gradient(circle at 62% 31%, rgba(255, 229, 176, 0.7) 0 1%, transparent 4%),
+    radial-gradient(circle at 69% 67%, rgba(216, 194, 255, 0.74) 0 1.4%, transparent 5%),
+    radial-gradient(circle at 43% 73%, rgba(255, 255, 255, 0.92) 0 1.3%, transparent 4%),
+    radial-gradient(circle at 50% 50%, rgba(201, 244, 255, 0.24), rgba(223, 215, 255, 0.12) 52%, transparent 73%);
+  box-shadow:
+    inset 0 0 32px rgba(255, 255, 255, 0.48),
+    0 0 25px rgba(228, 246, 255, 0.38);
+  animation: sphereBreath 4.8s ease-in-out infinite;
+}
+
+.sphereGlow {
+  position: absolute;
+  inset: 24%;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.68);
+  filter: blur(22px);
+  animation: sphereGlow 3.6s ease-in-out infinite alternate;
+}
+
+.sphereShimmer {
+  position: absolute;
+  inset: -30%;
+  border-radius: 42%;
+  background: conic-gradient(
+    from 40deg,
+    transparent 0 15%,
+    rgba(202, 247, 255, 0.35) 23%,
+    transparent 34% 56%,
+    rgba(237, 215, 255, 0.28) 66%,
+    transparent 78% 100%
+  );
+  filter: blur(7px);
+  mix-blend-mode: screen;
+  animation: sphereTurn 11s linear infinite;
+}
+
+.lightField {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.insideWorld {
+  position: absolute;
+  z-index: 2;
+  inset: -8%;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(255, 255, 255, 0.98) 0 7%, transparent 30%),
+    radial-gradient(circle at 22% 25%, rgba(198, 244, 255, 0.8), transparent 30%),
+    radial-gradient(circle at 78% 65%, rgba(218, 209, 255, 0.74), transparent 34%),
+    linear-gradient(145deg, #d8eeff 0%, #eef2ff 42%, #d9e9ff 100%);
+  will-change: opacity;
+}
+
+.insideGlow {
+  position: absolute;
+  inset: 5%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.92),
+    rgba(220, 246, 255, 0.28) 32%,
+    transparent 68%
+  );
+  filter: blur(28px);
+}
+
+.insideRibbonOne,
+.insideRibbonTwo {
+  position: absolute;
+  left: -12%;
+  width: 124%;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-left-color: transparent;
+  border-right-color: transparent;
+  border-radius: 50%;
+  filter: blur(1px);
+  box-shadow:
+    0 0 35px rgba(255, 255, 255, 0.3),
+    inset 0 0 45px rgba(167, 226, 255, 0.25);
+}
+
+.insideRibbonOne {
+  top: 22%;
+  height: 36%;
+  transform: rotate(-6deg);
+}
+
+.insideRibbonTwo {
+  top: 52%;
+  height: 28%;
+  transform: rotate(5deg);
+  opacity: 0.62;
+}
+
+.pearls {
+  position: absolute;
+  inset: 0;
+  opacity: 0.75;
+  background-image:
+    radial-gradient(circle at 12% 24%, white 0 2px, transparent 4px),
+    radial-gradient(circle at 22% 76%, #e4fbff 0 4px, transparent 7px),
+    radial-gradient(circle at 36% 38%, #fff4dd 0 2px, transparent 5px),
+    radial-gradient(circle at 49% 69%, white 0 3px, transparent 6px),
+    radial-gradient(circle at 63% 20%, #e7dcff 0 3px, transparent 6px),
+    radial-gradient(circle at 76% 54%, #dcfbff 0 4px, transparent 8px),
+    radial-gradient(circle at 88% 31%, white 0 2px, transparent 5px),
+    radial-gradient(circle at 91% 80%, #ffe9f3 0 4px, transparent 8px);
+  filter: drop-shadow(0 0 7px rgba(255, 255, 255, 0.9));
+}
+
+.membrane {
+  position: absolute;
+  z-index: 4;
+  top: 50%;
+  left: 50%;
+  width: min(86vw, 1120px);
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  background:
+    radial-gradient(circle at 36% 32%, rgba(255, 255, 255, 0.44), transparent 16%),
+    radial-gradient(circle, transparent 44%, rgba(205, 240, 255, 0.18) 64%, rgba(255, 255, 255, 0.58) 78%, transparent 82%);
+  box-shadow:
+    0 0 90px rgba(255, 255, 255, 0.7),
+    inset 0 0 110px rgba(209, 238, 255, 0.56);
+  will-change: opacity, transform;
+}
+
+.lightWash {
+  position: absolute;
+  z-index: 5;
+  inset: 0;
+  background: white;
+  pointer-events: none;
+}
+
+.header {
+  position: absolute;
+  z-index: 8;
+  top: 5.5vh;
+  left: 50%;
+  translate: -50% 0;
+  transition: opacity 120ms linear;
+}
+
+.logo {
+  width: clamp(220px, 20vw, 310px);
+  height: auto;
+  filter: brightness(0) saturate(100%) invert(21%) sepia(18%) saturate(2174%)
+    hue-rotate(177deg) brightness(88%) contrast(91%);
+  opacity: 0.78;
+}
+
+.copyLayer {
+  position: absolute;
+  z-index: 7;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+.primaryCopy,
+.secondaryCopy {
+  position: absolute;
+  width: min(84vw, 1100px);
+  margin: 0;
+  text-align: center;
+  color: #173b69;
+  letter-spacing: 0.08em;
+  text-shadow:
+    0 1px 12px rgba(255, 255, 255, 0.96),
+    0 0 32px rgba(255, 255, 255, 0.9);
+  will-change: opacity, transform;
+}
+
+.primaryCopy {
+  font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
+  font-size: clamp(30px, 3vw, 52px);
+  font-weight: 500;
+  line-height: 1.65;
+}
+
+.secondaryCopy {
+  font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
+  font-size: clamp(23px, 2.15vw, 38px);
+  font-weight: 500;
+  line-height: 1.8;
+}
+
+.arrival {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  will-change: opacity, transform;
+}
+
+.arrivalLabel {
+  margin: 0;
+  color: rgba(23, 59, 105, 0.58);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.32em;
+}
+
+.cta {
+  pointer-events: auto;
+  display: inline-flex;
+  min-width: 250px;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 999px;
+  padding: 18px 34px;
+  background: rgba(255, 255, 255, 0.54);
+  color: #173b69;
+  font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
+  font-size: 18px;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  box-shadow:
+    0 14px 45px rgba(70, 115, 181, 0.13),
+    inset 0 0 0 1px rgba(177, 222, 255, 0.22);
+  backdrop-filter: blur(18px);
+  transition:
+    transform 240ms ease,
+    background 240ms ease,
+    box-shadow 240ms ease;
+}
+
+.cta:hover,
+.cta:focus-visible {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow:
+    0 18px 55px rgba(70, 115, 181, 0.2),
+    0 0 45px rgba(255, 255, 255, 0.66);
+  outline: none;
+}
+
+.scrollGuide {
+  position: absolute;
+  z-index: 8;
+  bottom: 4.5vh;
+  left: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  translate: -50% 0;
+  color: rgba(23, 59, 105, 0.52);
+  font-size: 9px;
+  letter-spacing: 0.28em;
+}
+
+.scrollGuide i {
+  position: relative;
+  display: block;
+  width: 1px;
+  height: 38px;
+  overflow: hidden;
+  background: rgba(23, 59, 105, 0.14);
+}
+
+.scrollGuide i::after {
+  position: absolute;
+  top: -60%;
+  left: 0;
+  width: 1px;
+  height: 60%;
+  background: rgba(23, 59, 105, 0.72);
+  content: "";
+  animation: scrollLine 1.8s ease-in-out infinite;
+}
+
+.progress {
+  position: absolute;
+  z-index: 8;
+  top: 50%;
+  right: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  translate: 0 -50%;
+}
+
+.progress span {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(23, 59, 105, 0.2);
+  transition:
+    scale 240ms ease,
+    background 240ms ease;
+}
+
+.progress .progressActive {
+  scale: 1.75;
+  background: rgba(23, 59, 105, 0.7);
+}
+
+.motionNote {
+  position: absolute;
+  z-index: 9;
+  right: 24px;
+  bottom: 20px;
+  margin: 0;
+  color: rgba(23, 59, 105, 0.55);
+  font-size: 11px;
+}
+
+.mobileScrollScene {
+  height: 540svh;
+}
+
+.mobileViewport {
+  min-height: 100svh;
+}
+
+.mobileLayout .openingImage {
+  object-position: center;
+}
+
+.mobileLayout .sphereShell {
+  width: clamp(132px, 40vw, 174px);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow:
+    0 0 46px rgba(255, 255, 255, 0.42),
+    0 0 96px rgba(190, 225, 255, 0.26),
+    inset 0 0 58px rgba(255, 255, 255, 0.3);
+}
+
+.mobileLayout .header {
+  top: 5svh;
+}
+
+.mobileLayout .logo {
+  width: min(48vw, 205px);
+}
+
+.mobileLayout .primaryCopy,
+.mobileLayout .secondaryCopy {
+  width: 90%;
+  font-size: clamp(18px, 4.8vw, 21px);
+  line-height: 1.9;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.mobileLayout .primaryCopy {
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.mobileLayout .secondaryCopy {
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.mobileLayout .arrival {
+  width: 100%;
+  gap: 20px;
+}
+
+.mobileLayout .arrivalLabel {
+  font-size: 9px;
+  letter-spacing: 0.26em;
+}
+
+.mobileLayout .cta {
+  min-width: 218px;
+  padding: 16px 28px;
+  font-size: 16px;
+}
+
+.mobileLayout .progress {
+  display: none;
+}
+
+.mobileLayout .scrollGuide {
+  bottom: 3.5svh;
+}
+
+.mobileLayout .motionNote {
+  right: 14px;
+  bottom: 12px;
+  left: 14px;
+  text-align: center;
+}
+
+@keyframes scrollLine {
+  0% {
+    translate: 0 0;
+  }
+  100% {
+    translate: 0 260%;
+  }
+}
+
+@keyframes sphereBreath {
+  0%,
+  100% {
+    scale: 0.96;
+    opacity: 0.76;
+  }
+  50% {
+    scale: 1.06;
+    opacity: 1;
+  }
+}
+
+@keyframes sphereGlow {
+  from {
+    scale: 0.8;
+    opacity: 0.52;
+  }
+  to {
+    scale: 1.28;
+    opacity: 0.86;
+  }
+}
+
+@keyframes sphereTurn {
+  to {
+    rotate: 360deg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrollGuide i::after {
+    animation: none;
+  }
+
+  .cta,
+  .progress span {
+    transition: none;
+  }
+
+  .sphereCore,
+  .sphereGlow,
+  .sphereShimmer {
+    animation: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .viewport {
+    min-height: 600px;
+  }
+
+  .prototypeBadge {
+    top: 18px;
+    left: 18px;
+  }
+
+  .progress {
+    right: 18px;
+  }
+}
